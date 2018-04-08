@@ -24,11 +24,13 @@ public class camControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(global.m_gameStarted)
+		targetPos = new Vector3((Fish1.transform.position.x + Fish2.transform.position.x) / 2f, (Fish1.transform.position.y + Fish2.transform.position.y) / 2f, -10f); ;
+		transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
+        /*if(global.m_gameStarted)
         {
             targetPos = new Vector3((Fish1.transform.position.x + Fish2.transform.position.x) / 2f, (Fish1.transform.position.y + Fish2.transform.position.y) / 2f, -10f); ;
             transform.position = Vector3.Lerp(transform.position, targetPos, 0.5f);
-        }
+        }*/
 		
 		
 	}
