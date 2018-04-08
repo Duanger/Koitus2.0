@@ -1,44 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+
 
 public class FishAnimatorController : MonoBehaviour
 {
-	private Animator anim;
+	private Animator _fishAnim;
 	//private Vector3 targetPosition;
 	public float fishSwimSpeed = 0.05f;
 	public float turningSpeed;
+	public int CurrentSceneIndex;
 	public string PlayNum;
-	public bool LeftFacing;
-	public bool rightFacing;
+	[HideInInspector]public bool LeftFacing;
+	[HideInInspector]public bool rightFacing;
 	void Start ()
 	{
-		anim = GetComponent<Animator>();
-		if (PlayNum == "1")
+		if (SceneManager.GetActiveScene().buildIndex == 0)
+		{
+			_fishAnim = GetComponent<Animator>();
+			CurrentSceneIndex = 0;
+			if (PlayNum == "1")
+			{
+			
+				LeftFacing = true;
+			}
+			if (PlayNum == "2")
+			{
+			
+				rightFacing = true;
+				_fishAnim.SetBool("turnRight", true);
+			}
+		}
+
+		if (SceneManager.GetActiveScene().buildIndex == 1)
 		{
 			
-			LeftFacing = true;
 		}
-		if (PlayNum == "2")
-		{
-			
-			rightFacing = true;
-			anim.SetBool("turnRight", true);
-		}
-
-		//anim.SetBool("turnRight", true);
-
-
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		IntroSwimming(fishSwimSpeed,turningSpeed,PlayNum);
-
-
-
+		if (CurrentSceneIndex == 0)
+		{
+			IntroSwimming(fishSwimSpeed,turningSpeed,PlayNum);
+		}
+		
 	}
 
 	void IntroSwimming(float moveSpeed, float turnSpeed, string playerNum)
@@ -54,8 +62,8 @@ public class FishAnimatorController : MonoBehaviour
 				if (transform.position.x == -2.579994f)
 				{
 					rightFacing = true;
-					anim.SetBool("turnRight", true);
-					anim.SetBool("turnLeft", false);
+					_fishAnim.SetBool("turnRight", true);
+					_fishAnim.SetBool("turnLeft", false);
 				}
 			}
 			if (rightFacing)
@@ -66,8 +74,8 @@ public class FishAnimatorController : MonoBehaviour
 				if (transform.position.x == 2.730002f)
 				{
 					LeftFacing = true;
-					anim.SetBool("turnRight", false);
-					anim.SetBool("turnLeft", true);
+					_fishAnim.SetBool("turnRight", false);
+					_fishAnim.SetBool("turnLeft", true);
 				}
 			}
 
@@ -84,8 +92,8 @@ public class FishAnimatorController : MonoBehaviour
 				if (transform.position.x == 2.730002f)
 				{
 					LeftFacing = true;
-					anim.SetBool("turnLeft", true);
-					anim.SetBool("turnRight", false);
+					_fishAnim.SetBool("turnLeft", true);
+					_fishAnim.SetBool("turnRight", false);
 				}
 			}
 
@@ -97,11 +105,16 @@ public class FishAnimatorController : MonoBehaviour
 				if (transform.position.x == -2.579994f)
 				{
 					rightFacing = true;
-					anim.SetBool("turnLeft", false);
-					anim.SetBool("turnRight", true);
+					_fishAnim.SetBool("turnLeft", false);
+					_fishAnim.SetBool("turnRight", true);
 				}
 			}
 		}
+		
+	}
+
+	void MainSwimming()
+	{
 		
 	}
 }
